@@ -1,6 +1,6 @@
 using TaleWorlds.Engine.GauntletUI;
-using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.InputSystem;
+using TaleWorlds.Library;
 using TaleWorlds.ScreenSystem;
 
 namespace TournamentTracker.UI
@@ -12,9 +12,9 @@ namespace TournamentTracker.UI
     /// </summary>
     public sealed class TournamentTrackerScreen : ScreenBase
     {
-        private GauntletLayer?         _layer;
-        private TournamentTrackerVM?   _viewModel;
-        private IGauntletMovie?        _movie;
+        private GauntletLayer?                _layer;
+        private TournamentTrackerVM?            _viewModel;
+        private GauntletMovieIdentifier?        _movie;
 
         // ──────────────────────────────────────────────────────────────────────
         // Screen lifecycle
@@ -26,7 +26,7 @@ namespace TournamentTracker.UI
 
             _viewModel = new TournamentTrackerVM(this);
 
-            _layer = new GauntletLayer(500);
+            _layer = new GauntletLayer("TournamentTrackerLayer", 500, false);
             _movie = _layer.LoadMovie("TournamentTracker", _viewModel);
 
             // Capture mouse and keyboard so clicks reach the overlay.

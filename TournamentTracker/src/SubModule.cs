@@ -40,11 +40,13 @@ namespace TournamentTracker
                 return;
 
             // Only activate on the campaign map screen.
+            // Use Contains to handle both "MapScreen" and derived types.
             string? topScreenName = ScreenManager.TopScreen?.GetType().Name;
-            if (topScreenName != "MapScreen")
+            if (topScreenName == null || !topScreenName.Contains("MapScreen"))
                 return;
 
-            if (Input.IsKeyReleased(InputKey.T) && Input.IsKeyDown(InputKey.LeftControl))
+            bool ctrlHeld = Input.IsKeyDown(InputKey.LeftControl) || Input.IsKeyDown(InputKey.RightControl);
+            if (ctrlHeld && Input.IsKeyPressed(InputKey.T))
             {
                 ScreenManager.PushScreen(new TournamentTrackerScreen());
             }

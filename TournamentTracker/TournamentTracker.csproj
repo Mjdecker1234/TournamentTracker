@@ -23,7 +23,7 @@
   -->
   <PropertyGroup>
     <GameFolder Condition="'$(GameFolder)' == '' AND '$(BANNERLORD_GAME_DIR)' != ''">$(BANNERLORD_GAME_DIR)</GameFolder>
-    <GameFolder Condition="'$(GameFolder)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord</GameFolder>
+    <GameFolder Condition="'$(GameFolder)' == ''">F:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord</GameFolder>
     <GameBinDir>$(GameFolder)\bin\Win64_Shipping_Client</GameBinDir>
   </PropertyGroup>
 
@@ -62,6 +62,14 @@
     </Reference>
     <Reference Include="TaleWorlds.InputSystem">
       <HintPath>$(GameBinDir)\TaleWorlds.InputSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="TaleWorlds.ObjectSystem">
+      <HintPath>$(GameBinDir)\TaleWorlds.ObjectSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="TaleWorlds.Localization">
+      <HintPath>$(GameBinDir)\TaleWorlds.Localization.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>
