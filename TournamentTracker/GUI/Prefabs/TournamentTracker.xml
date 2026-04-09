@@ -1,0 +1,220 @@
+<!--
+  TournamentTracker.xml
+  GauntletUI prefab for the Tournament Tracker overlay screen.
+
+  Layout (top → bottom inside the panel):
+    • Title bar
+    • Column header row  (Town | Prize | Value)
+    • Divider line
+    • Scrollable list of TournamentItemVM rows  — OR —  "no active tournaments" message
+    • Footer with Refresh and Close buttons
+-->
+<Prefab>
+  <Window>
+    <!-- Full-screen dimmed backdrop -->
+    <Widget Id="Backdrop"
+            WidthSizePolicy="StretchToParent"
+            HeightSizePolicy="StretchToParent"
+            Color="#000000"
+            AlphaFactor="0.55"/>
+
+    <!-- Centred panel -->
+    <Widget Id="Panel"
+            WidthSizePolicy="Fixed"
+            HeightSizePolicy="Fixed"
+            SuggestedWidth="780"
+            SuggestedHeight="580"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Sprite="BlankWhiteSquare"
+            Color="#111111"
+            AlphaFactor="0.97">
+      <Children>
+
+        <!-- ── Title ─────────────────────────────────────────────────────── -->
+        <TextWidget Id="TitleText"
+                    Text="@Title"
+                    WidthSizePolicy="StretchToParent"
+                    HeightSizePolicy="Fixed"
+                    SuggestedHeight="52"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Brush.FontSize="24"
+                    Brush.FontStyle="Bold"
+                    Brush.TextHorizontalAlignment="Center"
+                    Brush.TextVerticalAlignment="Center"
+                    MarginTop="8"/>
+
+        <!-- ── Column headers ────────────────────────────────────────────── -->
+        <Widget Id="HeaderRow"
+                WidthSizePolicy="StretchToParent"
+                HeightSizePolicy="Fixed"
+                SuggestedHeight="32"
+                VerticalAlignment="Top"
+                MarginTop="64"
+                Sprite="BlankWhiteSquare"
+                Color="#222222">
+          <Children>
+            <TextWidget Id="ColTown"
+                        Text="Town"
+                        WidthSizePolicy="Fixed"
+                        SuggestedWidth="240"
+                        HeightSizePolicy="StretchToParent"
+                        Brush.FontStyle="Bold"
+                        Brush.TextHorizontalAlignment="Left"
+                        Brush.TextVerticalAlignment="Center"
+                        MarginLeft="16"/>
+            <TextWidget Id="ColPrize"
+                        Text="Prize"
+                        WidthSizePolicy="Fixed"
+                        SuggestedWidth="340"
+                        HeightSizePolicy="StretchToParent"
+                        HorizontalAlignment="Left"
+                        Brush.FontStyle="Bold"
+                        Brush.TextHorizontalAlignment="Left"
+                        Brush.TextVerticalAlignment="Center"
+                        MarginLeft="260"/>
+            <TextWidget Id="ColValue"
+                        Text="Est. Value"
+                        WidthSizePolicy="Fixed"
+                        SuggestedWidth="130"
+                        HeightSizePolicy="StretchToParent"
+                        HorizontalAlignment="Right"
+                        Brush.FontStyle="Bold"
+                        Brush.TextHorizontalAlignment="Right"
+                        Brush.TextVerticalAlignment="Center"
+                        MarginRight="16"/>
+          </Children>
+        </Widget>
+
+        <!-- Thin divider line below headers -->
+        <Widget Id="Divider"
+                WidthSizePolicy="StretchToParent"
+                HeightSizePolicy="Fixed"
+                SuggestedHeight="1"
+                VerticalAlignment="Top"
+                MarginTop="96"
+                Sprite="BlankWhiteSquare"
+                Color="#555555"/>
+
+        <!-- ── "No tournaments" message (shown when HasNoTournaments = true) ── -->
+        <TextWidget Id="EmptyLabel"
+                    Text="@NoTournamentsText"
+                    WidthSizePolicy="StretchToParent"
+                    HeightSizePolicy="Fixed"
+                    SuggestedHeight="40"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center"
+                    MarginTop="180"
+                    Brush.FontSize="18"
+                    Brush.TextHorizontalAlignment="Center"
+                    Brush.TextVerticalAlignment="Center"
+                    IsHidden="@HasTournaments"/>
+
+        <!-- ── Scrollable tournament list (shown when HasTournaments = true) ── -->
+        <ScrollablePanel Id="TournamentScroll"
+                         WidthSizePolicy="StretchToParent"
+                         HeightSizePolicy="Fixed"
+                         SuggestedHeight="430"
+                         VerticalAlignment="Top"
+                         MarginTop="100"
+                         MarginLeft="4"
+                         MarginRight="4"
+                         IsHidden="@HasNoTournaments"
+                         AutoScrollBar="true"
+                         ScrollbarType="VerticalScrollbar">
+          <WidgetTemplate>
+            <ListPanel Id="TournamentList"
+                       DataSource="{Tournaments}"
+                       WidthSizePolicy="StretchToParent"
+                       HeightSizePolicy="CoverChildren"
+                       ListSpace="2">
+              <ItemTemplate>
+                <!-- One row per TournamentItemVM -->
+                <Widget Id="Row"
+                        WidthSizePolicy="StretchToParent"
+                        HeightSizePolicy="Fixed"
+                        SuggestedHeight="44"
+                        Sprite="BlankWhiteSquare"
+                        Color="#1A1A1A">
+                  <Children>
+                    <TextWidget Id="RowTown"
+                                Text="@TownName"
+                                WidthSizePolicy="Fixed"
+                                SuggestedWidth="240"
+                                HeightSizePolicy="StretchToParent"
+                                Brush.TextHorizontalAlignment="Left"
+                                Brush.TextVerticalAlignment="Center"
+                                MarginLeft="16"/>
+                    <TextWidget Id="RowPrize"
+                                Text="@PrizeName"
+                                WidthSizePolicy="Fixed"
+                                SuggestedWidth="320"
+                                HeightSizePolicy="StretchToParent"
+                                HorizontalAlignment="Left"
+                                Brush.TextHorizontalAlignment="Left"
+                                Brush.TextVerticalAlignment="Center"
+                                MarginLeft="260"/>
+                    <TextWidget Id="RowValue"
+                                Text="@PrizeValue"
+                                WidthSizePolicy="Fixed"
+                                SuggestedWidth="130"
+                                HeightSizePolicy="StretchToParent"
+                                HorizontalAlignment="Right"
+                                Brush.TextHorizontalAlignment="Right"
+                                Brush.TextVerticalAlignment="Center"
+                                MarginRight="16"/>
+                  </Children>
+                </Widget>
+              </ItemTemplate>
+            </ListPanel>
+          </WidgetTemplate>
+        </ScrollablePanel>
+
+        <!-- ── Footer buttons ────────────────────────────────────────────── -->
+        <ButtonWidget Id="RefreshButton"
+                      WidthSizePolicy="Fixed"
+                      HeightSizePolicy="Fixed"
+                      SuggestedWidth="130"
+                      SuggestedHeight="38"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Bottom"
+                      MarginLeft="16"
+                      MarginBottom="12"
+                      Sprite="BlankWhiteSquare"
+                      Color="#333333"
+                      Command.Click="ExecuteRefresh">
+          <Children>
+            <TextWidget Text="Refresh"
+                        WidthSizePolicy="StretchToParent"
+                        HeightSizePolicy="StretchToParent"
+                        Brush.TextHorizontalAlignment="Center"
+                        Brush.TextVerticalAlignment="Center"/>
+          </Children>
+        </ButtonWidget>
+
+        <ButtonWidget Id="CloseButton"
+                      WidthSizePolicy="Fixed"
+                      HeightSizePolicy="Fixed"
+                      SuggestedWidth="130"
+                      SuggestedHeight="38"
+                      HorizontalAlignment="Right"
+                      VerticalAlignment="Bottom"
+                      MarginRight="16"
+                      MarginBottom="12"
+                      Sprite="BlankWhiteSquare"
+                      Color="#333333"
+                      Command.Click="ExecuteClose">
+          <Children>
+            <TextWidget Text="Close"
+                        WidthSizePolicy="StretchToParent"
+                        HeightSizePolicy="StretchToParent"
+                        Brush.TextHorizontalAlignment="Center"
+                        Brush.TextVerticalAlignment="Center"/>
+          </Children>
+        </ButtonWidget>
+
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>
