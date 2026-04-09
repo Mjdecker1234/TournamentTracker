@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Module>
+    <Name value="Tournament Tracker"/>
+    <Id value="TournamentTracker"/>
+    <Version value="v1.0.0"/>
+    <SingleplayerModule value="true"/>
+    <MultiplayerModule value="false"/>
+    <DependedModules>
+        <DependedModule Id="Native"/>
+        <DependedModule Id="SandBoxCore"/>
+        <DependedModule Id="Sandbox"/>
+        <DependedModule Id="StoryMode"/>
+        <DependedModule Id="CustomBattle"/>
+    </DependedModules>
+    <SubModules>
+        <SubModule>
+            <Name value="TournamentTracker"/>
+            <DLLName value="TournamentTracker.dll"/>
+            <SubModuleClassType value="TournamentTracker.SubModule"/>
+            <Assemblies/>
+        </SubModule>
+    </SubModules>
+    <Xmls/>
+</Module>

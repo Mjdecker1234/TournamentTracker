@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "AFtc2az5tiw=",
+  "success": true,
+  "projectFilePath": "/home/runner/work/ChaoticStart/ChaoticStart/TournamentTracker/TournamentTracker.csproj",
+  "expectedPackageFiles": [
+    "/tmp/codeql-scratch-4a47bdba1be29c15/dbs/csharp/working/packages/microsoft.netframework.referenceassemblies/1.0.3/microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
+    "/tmp/codeql-scratch-4a47bdba1be29c15/dbs/csharp/working/packages/microsoft.netframework.referenceassemblies.net472/1.0.3/microsoft.netframework.referenceassemblies.net472.1.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
