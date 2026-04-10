@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using TaleWorlds.Library;
 
 // The data layer lives in the parent namespace.
@@ -5,6 +8,13 @@ using TournamentTracker;
 
 namespace TournamentTracker.UI
 {
+    public enum SortMode
+    {
+        Name,
+        Distance,
+        PrizeValue
+    }
+
     /// <summary>
     /// Root ViewModel for the Tournament Tracker screen.
     /// Holds the list of active tournament rows and controls which panel is visible.
@@ -17,6 +27,8 @@ namespace TournamentTracker.UI
         private string _noTournamentsText = "No active tournaments found.";
         private bool   _hasTournaments;
         private bool   _hasNoTournaments = true;
+        private string _sortLabel         = "Sort: Name";
+        private SortMode _currentSort     = SortMode.Name;
         private MBBindingList<TournamentItemVM> _tournaments = new MBBindingList<TournamentItemVM>();
 
         public TournamentTrackerVM(TournamentTrackerScreen screen)
@@ -90,7 +102,7 @@ namespace TournamentTracker.UI
             }
         }
 
-        /// <summary>The list of active tournament rows, sorted alphabetically by town.</summary>
+        /// <summary>The list of active tournament rows.</summary>
         [DataSourceProperty]
         public MBBindingList<TournamentItemVM> Tournaments
         {
@@ -101,6 +113,20 @@ namespace TournamentTracker.UI
                 {
                     _tournaments = value;
                     OnPropertyChangedWithValue(value, nameof(Tournaments));
+                }
+            }
+        }
+
+        [DataSourceProperty]
+        public string SortLabel
+        {
+            get => _sortLabel;
+            set
+            {
+                if (_sortLabel != value)
+                {
+                    _sortLabel = value;
+                    OnPropertyChangedWithValue(value, nameof(SortLabel));
                 }
             }
         }
@@ -121,6 +147,27 @@ namespace TournamentTracker.UI
             _screen.Close();
         }
 
+        /// <summary>Cycles through sort modes: Name → Distance → Prize Value → Name …</summary>
+        public void ExecuteCycleSort()
+        {
+            switch (_currentSort)
+            {
+                case SortMode.Name:
+                    _currentSort = SortMode.Distance;
+                    SortLabel = "Sort: Distance";
+                    break;
+                case SortMode.Distance:
+                    _currentSort = SortMode.PrizeValue;
+                    SortLabel = "Sort: Value";
+                    break;
+                default:
+                    _currentSort = SortMode.Name;
+                    SortLabel = "Sort: Name";
+                    break;
+            }
+            Refresh();
+        }
+
         // ──────────────────────────────────────────────────────────────────────
         // Internal helpers
         // ──────────────────────────────────────────────────────────────────────
@@ -130,9 +177,23 @@ namespace TournamentTracker.UI
             _tournaments.Clear();
 
             var activeTournaments = TournamentTrackerBehavior.GetActiveTournaments();
+
+            switch (_currentSort)
+            {
+                case SortMode.Distance:
+                    activeTournaments.Sort((a, b) => a.Distance.CompareTo(b.Distance));
+                    break;
+                case SortMode.PrizeValue:
+                    activeTournaments.Sort((a, b) => b.PrizeValue.CompareTo(a.PrizeValue));
+                    break;
+                default:
+                    activeTournaments.Sort((a, b) => string.Compare(a.TownName, b.TownName, StringComparison.OrdinalIgnoreCase));
+                    break;
+            }
+
             foreach (var entry in activeTournaments)
             {
-                _tournaments.Add(new TournamentItemVM(entry.TownName, entry.PrizeName, entry.PrizeValue));
+                _tournaments.Add(new TournamentItemVM(entry.TownName, entry.PrizeName, entry.PrizeValue, entry.Distance));
             }
 
             HasTournaments   = _tournaments.Count > 0;

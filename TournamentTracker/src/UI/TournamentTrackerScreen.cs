@@ -33,6 +33,10 @@ namespace TournamentTracker.UI
             _layer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
 
             AddLayer(_layer);
+
+            // Focus this layer so keyboard events (Escape) are captured.
+            _layer.IsFocusLayer = true;
+            ScreenManager.TrySetFocus(_layer);
         }
 
         protected override void OnFinalize()

@@ -9,15 +9,26 @@ namespace TournamentTracker.UI
     /// </summary>
     public sealed class TournamentItemVM : ViewModel
     {
-        private string _townName  = string.Empty;
-        private string _prizeName = string.Empty;
-        private string _prizeValue = string.Empty;
+        private string _townName     = string.Empty;
+        private string _prizeName    = string.Empty;
+        private string _prizeValue   = string.Empty;
+        private string _distanceText = string.Empty;
 
-        public TournamentItemVM(string townName, string prizeName, int prizeValue)
+        /// <summary>Raw prize value in gold — used for sorting.</summary>
+        public int   RawPrizeValue { get; }
+
+        /// <summary>Straight-line distance from the player — used for sorting.</summary>
+        public float RawDistance   { get; }
+
+        public TournamentItemVM(string townName, string prizeName, int prizeValue, float distance)
         {
-            TownName   = townName;
-            PrizeName  = prizeName;
-            PrizeValue = $"{prizeValue:N0} gold";
+            RawPrizeValue = prizeValue;
+            RawDistance    = distance;
+
+            TownName     = townName;
+            PrizeName    = prizeName;
+            PrizeValue   = $"{prizeValue:N0}";
+            DistanceText = $"{distance:F1}";
         }
 
         [DataSourceProperty]
@@ -58,6 +69,20 @@ namespace TournamentTracker.UI
                 {
                     _prizeValue = value;
                     OnPropertyChangedWithValue(value, nameof(PrizeValue));
+                }
+            }
+        }
+
+        [DataSourceProperty]
+        public string DistanceText
+        {
+            get => _distanceText;
+            set
+            {
+                if (_distanceText != value)
+                {
+                    _distanceText = value;
+                    OnPropertyChangedWithValue(value, nameof(DistanceText));
                 }
             }
         }

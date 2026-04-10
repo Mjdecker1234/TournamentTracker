@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.CampaignSystem.TournamentGames;
 
@@ -52,7 +53,15 @@ namespace TournamentTracker
                     string prizeName = tournament.Prize?.Name?.ToString() ?? "Unknown Prize";
                     int    prizeVal  = tournament.Prize?.Value ?? 0;
 
-                    result.Add(new TournamentEntryData(townName, prizeName, prizeVal));
+                    float distance = 0f;
+                    try
+                    {
+                        if (MobileParty.MainParty != null)
+                            distance = MobileParty.MainParty.GetPosition2D.Distance(settlement.GetPosition2D);
+                    }
+                    catch { }
+
+                    result.Add(new TournamentEntryData(townName, prizeName, prizeVal, distance));
                 }
             }
             catch (Exception)
@@ -73,12 +82,14 @@ namespace TournamentTracker
         public string TownName  { get; }
         public string PrizeName { get; }
         public int    PrizeValue { get; }
+        public float  Distance   { get; }
 
-        public TournamentEntryData(string townName, string prizeName, int prizeValue)
+        public TournamentEntryData(string townName, string prizeName, int prizeValue, float distance)
         {
             TownName   = townName;
             PrizeName  = prizeName;
             PrizeValue = prizeValue;
+            Distance   = distance;
         }
     }
 }
