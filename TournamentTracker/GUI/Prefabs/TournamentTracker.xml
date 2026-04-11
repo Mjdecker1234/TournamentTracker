@@ -21,7 +21,7 @@
         <!-- Sort button (top-right) -->
         <ButtonWidget Id="SortButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="180" SuggestedHeight="30" HorizontalAlignment="Right" VerticalAlignment="Top" MarginTop="16" MarginRight="16" Sprite="BlankWhiteSquare_9" Color="#3A2A20FF" Command.Click="ExecuteCycleSort">
           <Children>
-            <TextWidget Text="@SortLabel" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontSize="16" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center"/>
+            <TextWidget Text="@SortLabel" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontColor="#F8E3BEFF" Brush.FontSize="16" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center"/>
           </Children>
         </ButtonWidget>
 
@@ -81,16 +81,10 @@
           </Children>
         </Widget>
 
-        <!-- Footer buttons -->
-        <ButtonWidget Id="RefreshButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="140" SuggestedHeight="42" HorizontalAlignment="Left" VerticalAlignment="Bottom" MarginLeft="16" MarginBottom="12" Sprite="BlankWhiteSquare_9" Color="#3A2A20FF" Command.Click="ExecuteRefresh">
+        <!-- Footer button -->
+        <ButtonWidget Id="CloseButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="140" SuggestedHeight="42" HorizontalAlignment="Center" VerticalAlignment="Bottom" MarginBottom="12" Sprite="BlankWhiteSquare_9" Color="#3A2A20FF" Command.Click="ExecuteClose">
           <Children>
-            <TextWidget Text="Refresh" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center"/>
-          </Children>
-        </ButtonWidget>
-
-        <ButtonWidget Id="CloseButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="140" SuggestedHeight="42" HorizontalAlignment="Right" VerticalAlignment="Bottom" MarginRight="16" MarginBottom="12" Sprite="BlankWhiteSquare_9" Color="#3A2A20FF" Command.Click="ExecuteClose">
-          <Children>
-            <TextWidget Text="Close" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center"/>
+            <TextWidget Text="Close" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Brush.FontColor="#F8E3BEFF" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center"/>
           </Children>
         </ButtonWidget>
 
